@@ -1,5 +1,6 @@
 import iconSave from "../../assets/icons/save.svg";
 import iconExit from "../../assets/icons/exit.svg";
+import iconCancelar from "../../assets/icons/cancelar.svg";
 
 export default function CrearPopup({
   id,
@@ -12,6 +13,7 @@ export default function CrearPopup({
   setTipo,
   setShowCreatePopup,
   setShowConfirmPopup,
+  setShowSelector,
 }) {
   return (
     <div
@@ -54,18 +56,30 @@ export default function CrearPopup({
 
           {/* Campo Tecnología */}
           <div className="mb-4">
-            <label className="block font-bold text-center mb-1">Tecnología</label>
+            <label className="block font-bold text-center mb-1">
+              Tecnología
+            </label>
             <select
               value={technology}
               onChange={(e) => setTechnology(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
               required
             >
-              <option className="text-center" value="">Seleccione Tecnología</option>
-              <option className="text-center" value="Poller">Poller</option>
-              <option className="text-center" value="Harmonic">Harmonic</option>
-              <option className="text-center" value="Cisco">Cisco</option>
-              <option className="text-center" value="Aura">Aura</option>
+              <option className="text-center" value="">
+                Seleccione Tecnología
+              </option>
+              <option className="text-center" value="Poller">
+                Poller
+              </option>
+              <option className="text-center" value="Harmonic">
+                Harmonic
+              </option>
+              <option className="text-center" value="Cisco">
+                Cisco
+              </option>
+              <option className="text-center" value="Aura">
+                Aura
+              </option>
             </select>
           </div>
 
@@ -78,9 +92,15 @@ export default function CrearPopup({
               className="w-full p-2 border border-gray-300 rounded"
               required
             >
-              <option className="text-center" value="Seleccion">Selección Tipo</option>
-              <option className="text-center" value="Optico">Óptico</option>
-              <option className="text-center" value="Virtual">Virtual</option>
+              <option className="text-center" value="Seleccion">
+                Selección Tipo
+              </option>
+              <option className="text-center" value="Optico">
+                Óptico
+              </option>
+              <option className="text-center" value="Virtual">
+                Virtual
+              </option>
             </select>
           </div>
 
@@ -104,6 +124,16 @@ export default function CrearPopup({
           >
             <img className="h-6 w-6" src={iconSave} alt="Guardar" />
           </button>
+          <button
+            className=" bg-white  py-1 px-4 rounded hover:bg-red-400"
+            onClick={() => {
+              setShowCreatePopup(false);
+              setShowSelector(true);
+            }}
+          >
+            <img className="h-5 w-5" src={iconCancelar} alt="Volver" />
+          </button>
+
           <button
             className="bg-white hover:bg-red-500 rounded p-2"
             onClick={() => setShowCreatePopup(false)}

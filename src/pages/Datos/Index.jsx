@@ -12,7 +12,7 @@ import iconLogin from "../../assets/icons/login.svg";
 import iconUpdate from "../../assets/icons/update.svg";
 import iconDelete from "../../assets/icons/delete.svg";
 import SelectPost from "../../components/SelectPost/Index";
-import CreateSCV from "../../components/CreateSCV/index";
+import CreateSCV from "../../components/PopupCreateSCV/index";
 
 export default function Datos() {
   // Estados para el formulario
@@ -36,7 +36,7 @@ export default function Datos() {
   const [idToUpdate, setIdToUpdate] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
   const [showCSVPopup, setShowCSVPopup] = useState(false);
-
+  const [ultimaActualizacion, setUltimaActualizacion] = useState(null);
   const navigate = useNavigate();
 
   // Limpiar datos del formulario
@@ -68,6 +68,7 @@ export default function Datos() {
       data.forEach((item) => {
         statusData[item.id] = Math.random() > 0.3;
       });
+      setUltimaActualizacion(new Date());
       setStatus(statusData);
     } catch (err) {
       console.log(err);
@@ -217,6 +218,11 @@ export default function Datos() {
       item.tec?.toLowerCase().includes(searchInformation.toLowerCase())
   );
 
+  //Verificar rol
+
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const rol = usuario?.rol || "usuario";
+
   return (
     <>
       <Navbar className="fixed top-0 left-0 w-full  shadow-md z-50" />
@@ -232,6 +238,7 @@ export default function Datos() {
             setTipo={setTipo}
             setShowConfirmPopup={setShowConfirmPopup}
             setShowCreatePopup={setShowCreatePopup}
+            setShowSelector={setShowSelector}
           />
         )}
 
@@ -291,6 +298,7 @@ export default function Datos() {
           <CreateSCV
             setShowCSVPopup={setShowCSVPopup}
             obtenerInformacion={obtenerInformacion}
+            setShowSelector={setShowSelector}
           />
         )}
 
@@ -298,7 +306,19 @@ export default function Datos() {
         {/* Tabla */}
         <div className="bg-gray-200 min-h[calc(100vh-80px)] p-4">
           <h1 className="text-0 md:text-2xl font-bold text-center mb-4 md:mb-1  ">
-            Hive (Desplegado)
+            Hive (Local)-Visualizacaion Nodos con Falla-Unica actualizacionde
+            vista{" "}
+            <span>
+              {ultimaActualizacion &&
+                ultimaActualizacion.toLocaleString("es-CO", {
+                  year: "2-digit",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour:"2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                })}
+            </span>
           </h1>
 
           {/* Controles superiores */}
@@ -409,29 +429,33 @@ export default function Datos() {
                     </div>
 
                     <div className="flex justify-end gap-2 mt-3">
-                      <button
-                        className="p-1 bg-gray-100 hover:bg-yellow-500 rounded"
-                        onClick={() => prepararEdicion(item)}
-                      >
-                        <img
-                          className="h-3 w-3"
-                          src={iconUpdate}
-                          alt="Editar"
-                        />
-                      </button>
-                      <button
-                        className="p-1 bg-gray-100 hover:bg-red-500 rounded"
-                        onClick={() => {
-                          setIdOperacion(item.id);
-                          setShowDeletePopup(true);
-                        }}
-                      >
-                        <img
-                          className="h-3 w-3"
-                          src={iconDelete}
-                          alt="Eliminar"
-                        />
-                      </button>
+                      {(rol === "admin" || rol === "usuario") && (
+                        <button
+                          className="p-1 bg-gray-100 hover:bg-yellow-500 rounded"
+                          onClick={() => prepararEdicion(item)}
+                        >
+                          <img
+                            className="h-3 w-3"
+                            src={iconUpdate}
+                            alt="Editar"
+                          />
+                        </button>
+                      )}
+                      {rol === "admin" && (
+                        <button
+                          className="p-1 bg-gray-100 hover:bg-red-500 rounded"
+                          onClick={() => {
+                            setIdOperacion(item.id);
+                            setShowDeletePopup(true);
+                          }}
+                        >
+                          <img
+                            className="h-3 w-3"
+                            src={iconDelete}
+                            alt="Eliminar"
+                          />
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -520,29 +544,33 @@ export default function Datos() {
                       </td>
                       <td className="px-1 py-1">
                         <div className="flex gap-2">
-                          <button
-                            className="p-1 bg-white hover:bg-yellow-500 rounded transition-colors"
-                            onClick={() => prepararEdicion(item)}
-                          >
-                            <img
-                              className="h-4 w-4"
-                              src={iconUpdate}
-                              alt="Editar"
-                            />
-                          </button>
-                          <button
-                            className="p-1 bg-white hover:bg-red-500 rounded transition-colors"
-                            onClick={() => {
-                              setIdOperacion(item.id);
-                              setShowDeletePopup(true);
-                            }}
-                          >
-                            <img
-                              className="h-4 w-4"
-                              src={iconDelete}
-                              alt="Eliminar"
-                            />
-                          </button>
+                          {(rol === "usuario" || rol === "administrador") && (
+                            <button
+                              className="p-1 bg-white hover:bg-yellow-500 rounded transition-colors"
+                              onClick={() => prepararEdicion(item)}
+                            >
+                              <img
+                                className="h-4 w-4"
+                                src={iconUpdate}
+                                alt="Editar"
+                              />
+                            </button>
+                          )}
+                          {rol === "administrador" && (
+                            <button
+                              className="p-1 bg-white hover:bg-red-500 rounded transition-colors"
+                              onClick={() => {
+                                setIdOperacion(item.id);
+                                setShowDeletePopup(true);
+                              }}
+                            >
+                              <img
+                                className="h-4 w-4"
+                                src={iconDelete}
+                                alt="Eliminar"
+                              />
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
+import iconSave from "../../assets/icons/save.svg";
+import iconCancelar from "../../assets/icons/cancelar.svg";
+import iconExit from "../../assets/icons/exit.svg";
 
-export default function CreateCSV({ setShowCSVPopup, obtenerInformacion }) {
+export default function CreateCSV({
+  setShowCSVPopup,
+  obtenerInformacion,
+  setShowSelector,
+}) {
   const [archivo, setArchivo] = useState(null);
 
   const handleArchivoChange = (e) => {
@@ -50,30 +57,52 @@ export default function CreateCSV({ setShowCSVPopup, obtenerInformacion }) {
         <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
           <div className="mb-4">
             <h2 className="text-lg font-semibold mb-4">
-            Selecciona archivo CSV
-          </h2>
+              Selecciona archivo CSV
+            </h2>
             <input
-              className="border p-2 rounded w-full"
+              id="archivoCSV"
               type="file"
               accept=".csv"
               onChange={handleArchivoChange}
+              className="hidden"
             />
+
+            <label
+              htmlFor="archivoCSV"
+              className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 inline-block"
+            >
+              Seleccionar archivo CSV
+            </label>
           </div>
-          
+
           <div className="flex justify-center gap-4">
             <button
               className="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-600"
               onClick={handleAceptar}
             >
-              Aceptar
+              <img className="h-6 w-6" src={iconSave} alt="Guardar" />
             </button>
             <button
               className="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-600"
-              onClick={() => setShowCSVPopup(false)}
+              onClick={() => {
+                setShowCSVPopup(false);
+                setShowSelector(true);
+              }}
             >
-              Cancelar
+              <img className="h-6 w-6" src={iconCancelar} alt="Cancelar" />
             </button>
           </div>
+        </div>
+        <div className="flex justify-end mt-3">
+          {" "}
+          <button
+            className=" bg-white  py-1 px-4 rounded hover:bg-red-400"
+            onClick={() => {
+              setShowCSVPopup(false);
+            }}
+          >
+            <img className="h-6 w-6" src={iconExit} alt="Salir" />
+          </button>
         </div>
       </div>
     </div>
