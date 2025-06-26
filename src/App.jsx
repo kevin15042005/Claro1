@@ -27,8 +27,8 @@ export default function App() {
     const contraseña = e.target.contraseña.value;
 
     const usuarioEstatico = {
-      correo: "admin@admin.com",
-      contraseña: "admin123",
+      correo: "45708765@gmail.com",
+      contraseña: "45708765",
       rol: "administrador",
     };
 

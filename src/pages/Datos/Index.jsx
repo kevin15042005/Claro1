@@ -31,9 +31,6 @@ export default function Datos() {
   const [showUpdateConfirmPopup, setShowUpdateConfirmPopup] = useState(false);
   const [searchInformation, setSearchInformation] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
-  const [lastUpdates, setLastUpdates] = useState({});
-  const [showIdUpdatePopup, setShowIdUpdatePopup] = useState(false);
-  const [idToUpdate, setIdToUpdate] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
   const [showCSVPopup, setShowCSVPopup] = useState(false);
   const [ultimaActualizacion, setUltimaActualizacion] = useState(null);
@@ -429,7 +426,7 @@ export default function Datos() {
                     </div>
 
                     <div className="flex justify-end gap-2 mt-3">
-                      {(rol === "admin" || rol === "usuario") && (
+                      {(rol === "administrador" || rol === "usuario") && (
                         <button
                           className="p-1 bg-gray-100 hover:bg-yellow-500 rounded"
                           onClick={() => prepararEdicion(item)}
@@ -441,7 +438,7 @@ export default function Datos() {
                           />
                         </button>
                       )}
-                      {rol === "admin" && (
+                      {rol === "administrador" && (
                         <button
                           className="p-1 bg-gray-100 hover:bg-red-500 rounded"
                           onClick={() => {

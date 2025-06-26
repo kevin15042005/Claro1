@@ -24,15 +24,7 @@ export default function ActualizarPopup({
         </section>
 
         <form className="bg-white p-3 rounded-md">
-          <div className="mb-4">
-            <label className="block font-bold mb-1">ID</label>
-            <input
-              className="w-full p-2 border border-gray-300 rounded"
-              type="text"
-              value={idOperacion}
-              readOnly
-            />
-          </div>
+        
 
           <div className="mb-4">
             <label className="block font-bold mb-1">Nodo</label>

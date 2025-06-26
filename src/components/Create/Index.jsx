@@ -28,18 +28,7 @@ export default function CrearPopup({
         </section>
 
         <form className="bg-white p-3 rounded-md">
-          {/* Campo ID */}
-          <div className="mb-4">
-            <label className="block font-bold text-center mb-1">ID</label>
-            <input
-              type="text"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              placeholder="ID"
-              className="w-full p-2 border border-gray-300 rounded text-center"
-              required
-            />
-          </div>
+         
 
           {/* Campo Nodo */}
           <div className="mb-4">
