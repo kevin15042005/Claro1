@@ -11,8 +11,9 @@ import iconAdd from "../../assets/icons/add.svg";
 import iconLogin from "../../assets/icons/login.svg";
 import iconUpdate from "../../assets/icons/update.svg";
 import iconDelete from "../../assets/icons/delete.svg";
-import SelectPost from "../../components/SelectPost/Index"
-import CreateSCV from "../../components/CreateSCV/index"
+import SelectPost from "../../components/SelectPost/Index";
+import CreateSCV from "../../components/CreateSCV/index";
+
 export default function Datos() {
   // Estados para el formulario
   const [nodo, setNodo] = useState("");
@@ -33,7 +34,8 @@ export default function Datos() {
   const [lastUpdates, setLastUpdates] = useState({});
   const [showIdUpdatePopup, setShowIdUpdatePopup] = useState(false);
   const [idToUpdate, setIdToUpdate] = useState(null);
-
+  const [showSelector, setShowSelector] = useState(false);
+  const [showCSVPopup, setShowCSVPopup] = useState(false);
 
   const navigate = useNavigate();
 
@@ -277,6 +279,21 @@ export default function Datos() {
             setShowDeletePopup={setShowDeletePopup}
           />
         )}
+        {showSelector && (
+          <SelectPost
+            setShowCreatePopup={setShowCreatePopup}
+            setShowCSVPopup={setShowCSVPopup}
+            setShowSelector={setShowSelector}
+          />
+        )}
+
+        {showCSVPopup && (
+          <CreateSCV
+            setShowCSVPopup={setShowCSVPopup}
+            obtenerInformacion={obtenerInformacion}
+          />
+        )}
+
         {/* Contenedor del contenido */}
         {/* Tabla */}
         <div className="bg-gray-200 min-h[calc(100vh-80px)] p-4">
@@ -297,7 +314,7 @@ export default function Datos() {
             <div className="flex gap-2 w-full md:w-auto ">
               <button
                 className="p-2 rounded-md border border-gray-300 hover:bg-green-500 transition-colors flex items-center justify-center w-full md:w-auto"
-                onClick={() => setShowCreatePopup(true)}
+                onClick={() => setShowSelector(true)}
               >
                 <img
                   src={iconAdd}
@@ -344,7 +361,6 @@ export default function Datos() {
                         {sinNovedad ? "Sin novedad" : "En limbo"}
                       </span>
                     </div>
-
 
                     <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                       <div>
